@@ -299,7 +299,7 @@ begin
               IN_REQ <= '1';    --poziadavka na vstup
 
       when SGet2 =>
-              if IN_VLD <= '1' then                  
+              if IN_VLD = '1' then                  
                   mx1_sel <= '1';   --nastavenie adresy na zapis
                   mx2_sel <= '0';                  
                   mx3_sel <= "00";  --vyber zapisovanych dat                  
@@ -364,6 +364,7 @@ begin
             mx1_sel <= '0'; --nacitanie dalsej instrukcie
             DATA_RDWR <= '0';
             DATA_EN <= '1';
+				nstate <= SWhileStart4;
 
      when SWhileStart4 =>
             --pocitanie zanorenia
@@ -380,6 +381,7 @@ begin
             else
                 nstate <= SWhileStart3;
 				end if;
+				inc_pc <= '1';
 
       when SWhileEnd1 =>
                 mx1_sel <= '1';
@@ -413,6 +415,7 @@ begin
           elsif DATA_RDATA = X"5D" then -- ]
               inc_cnt <= '1';
           end if;
+			 nstate <= SWhileEnd5;
       
       when SWhileEnd5 =>
           if cnt_val = "0000000000000" then
