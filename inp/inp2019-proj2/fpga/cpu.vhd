@@ -176,11 +176,11 @@ end process;
 ---------------------------------------------------------
 --FSM
 ---------------------------------------------------------
-pstatereg: process(RESET, CLK)
+pstatereg: process(RESET, CLK, EN)
 begin
    if (RESET ='1') then
       pstate <= SIdle;
-   elsif (CLK'event) and (CLK='1') then
+   elsif (CLK'event) and (CLK='1') and (EN='1') then
       pstate <= nstate;
    end if;
 end process;
@@ -207,11 +207,7 @@ begin
  
   case pstate is
       when SIdle =>
-			 if EN = '1' then
 				nstate <= SFetch;
-			 else
-				nstate <= SIdle;
-			 end if;
  
       when SFetch =>
            nstate <= SDecode;
@@ -386,7 +382,7 @@ begin
 				nstate <= SWhileStart5;
 
       when SWhileStart5 =>
-            if cnt_val = "0000000000000" then
+            if cnt_val = 0 then
                 nstate <= SFetch;
             else
                 nstate <= SWhileStart3;
@@ -428,7 +424,7 @@ begin
 			 nstate <= SWhileEnd5;
       
       when SWhileEnd5 =>
-          if cnt_val = "0000000000000" then
+          if cnt_val = 0 then
               inc_pc <= '1';
               nstate <= SFetch;
           else
