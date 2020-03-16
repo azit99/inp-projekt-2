@@ -1,5 +1,5 @@
 ## Vut fit INP projekt 2
 
-#### Year 2019/2020
+#### Semester: 2019 Winter
 
 #### Evaluation: 23/23 points
